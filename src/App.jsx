@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./App.css";
 
 function App() {
@@ -21,6 +22,9 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        if (data.acknowledged) {
+          form.reset();
+        }
       });
   };
 
@@ -34,6 +38,9 @@ function App() {
         <br />
         <input type="submit" />
       </form>
+      <Link to="/users">
+        <button>Users</button>
+      </Link>
     </>
   );
 }
