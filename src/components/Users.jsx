@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 
 const Users = () => {
-  const user = useLoaderData();
+  const loadedUser = useLoaderData();
+
+  const [users, setUsers] = useState(loadedUser);
 
   const handleDelete = (_id) => {
     console.log("delete", _id);
@@ -14,18 +17,20 @@ const Users = () => {
         console.log(data);
         if (data.deletedCount > 0) {
           alert("successfully deleted from database.");
+          const remainingUser = users.filter((user) => user._id !== _id);
+          setUsers(remainingUser);
         }
       });
   };
 
   return (
     <div>
-      <h1>{user.length}</h1>
+      <h1>{users.length}</h1>
       <div>
-        {user.map((u) => (
-          <p key={u._id}>
-            {u.name} : {u.email} : {u._id}
-            <button onClick={() => handleDelete(u._id)}>X</button>
+        {users.map((user) => (
+          <p key={user._id}>
+            {user.name} : {user.email} : {user._id}
+            <button onClick={() => handleDelete(user._id)}>X</button>
           </p>
         ))}
       </div>
